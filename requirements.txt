@@ -1,0 +1,30 @@
+# Interface gráfica
+customtkinter==5.2.2
+Pillow==10.1.0
+
+# Banco de dados
+psycopg2-binary==2.9.9
+sqlalchemy==2.0.23
+alembic==1.13.1
+
+# Autenticação e segurança
+bcrypt==4.1.2
+PyJWT==2.8.0
+
+# Geração de PDFs
+reportlab==4.0.7
+
+# Manipulação de datas
+python-dateutil==2.8.2
+
+# Validação de dados
+pydantic==2.5.2
+
+# Configurações
+python-dotenv==1.0.0
+
+# Upload de arquivos
+requests==2.31.0
+
+# Utilitários
+toml==0.10.2
