@@ -356,7 +356,11 @@ class ProjectsFrame:
     def _hide_projects_loading(self):
         """Esconde o indicador de carregamento de projetos"""
         if self.is_projects_loading:
-            self.projects_loading_indicator.grid_forget()
+            try:
+                if self.projects_loading_indicator.winfo_exists():
+                    self.projects_loading_indicator.grid_forget()
+            except tk.TclError:
+                pass  # Widget já foi destruído
             self.is_projects_loading = False
     
     def _load_projects(self):
@@ -382,7 +386,10 @@ class ProjectsFrame:
         
         session = db_manager.get_session()
         try:
-            projects = session.query(Project).filter(
+            from sqlalchemy.orm import joinedload
+            projects = session.query(Project).options(
+                joinedload(Project.client)
+            ).filter(
                 Project.user_id == user.id
             ).order_by(Project.created_at.desc()).all()
             
@@ -657,11 +664,11 @@ class ProjectsFrame:
     
     def show(self):
         """Exibe o frame de projetos"""
-        self.frame.grid(row=0, column=0, sticky="nsew")
+        self.frame.pack(fill="both", expand=True)
     
     def hide(self):
         """Esconde o frame de projetos"""
-        self.frame.grid_remove()
+        self.frame.pack_forget()
     
     def refresh(self):
         """Atualiza os dados do frame"""

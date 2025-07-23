@@ -679,11 +679,11 @@ class BoardsFrame:
     
     def show(self):
         """Exibe o frame de quadros"""
-        self.frame.grid(row=0, column=0, sticky="nsew")
+        self.frame.pack(fill="both", expand=True)
     
     def hide(self):
         """Esconde o frame de quadros"""
-        self.frame.grid_remove()
+        self.frame.pack_forget()
     
     def refresh(self):
         """Atualiza os dados do frame"""

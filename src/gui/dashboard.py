@@ -443,8 +443,11 @@ class Dashboard:
         
         session = db_manager.get_session()
         try:
-            # Busca projetos ativos
-            active_projects = session.query(Project).filter(
+            # Busca projetos ativos com relacionamentos carregados
+            from sqlalchemy.orm import joinedload
+            active_projects = session.query(Project).options(
+                joinedload(Project.client)
+            ).filter(
                 Project.user_id == user.id,
                 Project.status == ProjectStatus.ATIVO
             ).all()
@@ -515,11 +518,11 @@ class Dashboard:
     
     def show(self):
         """Exibe o dashboard"""
-        self.frame.grid(row=0, column=0, sticky="nsew")
+        self.frame.pack(fill="both", expand=True)
     
     def hide(self):
         """Esconde o dashboard"""
-        self.frame.grid_remove()
+        self.frame.pack_forget()
     
     def refresh(self):
         """Atualiza os dados do dashboard de forma assíncrona"""

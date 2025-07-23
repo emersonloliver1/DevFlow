@@ -439,8 +439,6 @@ class MainWindow:
             fg_color="transparent"
         )
         self.content_container.pack(fill="both", expand=True, padx=20, pady=20)
-        self.content_container.grid_columnconfigure(0, weight=1)
-        self.content_container.grid_rowconfigure(0, weight=1)
     
     def _update_nav_buttons(self, active_frame: str):
         """Atualiza o estado visual dos botões de navegação"""
@@ -462,11 +460,11 @@ class MainWindow:
         """Exibe o frame especificado"""
         # Limpa o container atual
         for widget in self.content_container.winfo_children():
-            widget.grid_remove()
+            widget.pack_forget()
         
         # Exibe um indicador de carregamento
         loading_frame = ctk.CTkFrame(self.content_container)
-        loading_frame.grid(row=0, column=0, sticky="nsew")
+        loading_frame.pack(fill="both", expand=True)
         
         loading_label = ctk.CTkLabel(
             loading_frame,

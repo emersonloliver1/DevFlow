@@ -212,7 +212,11 @@ class ClientsFrame:
     def _hide_loading(self):
         """Esconde o indicador de carregamento"""
         if self.is_loading:
-            self.loading_indicator.grid_forget()
+            try:
+                if self.loading_indicator.winfo_exists():
+                    self.loading_indicator.grid_forget()
+            except tk.TclError:
+                pass  # Widget já foi destruído
             self.is_loading = False
     
     def _is_cache_valid(self, cache_key):
@@ -439,11 +443,11 @@ class ClientsFrame:
     
     def show(self):
         """Exibe o frame de clientes"""
-        self.frame.grid(row=0, column=0, sticky="nsew")
+        self.frame.pack(fill="both", expand=True)
     
     def hide(self):
         """Esconde o frame de clientes"""
-        self.frame.grid_remove()
+        self.frame.pack_forget()
     
     def refresh(self):
         """Atualiza os dados do frame"""
